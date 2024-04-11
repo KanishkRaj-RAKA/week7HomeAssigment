@@ -1,0 +1,28 @@
+#include <stdio.h>
+
+int main()
+{
+    int r,i,j,k;
+    printf("Enter the number of rows");
+    scanf("%d",&r);
+    for(i=1;i<=r;i++){
+        int a=1;
+        for(j=1;j<=r;j++){
+            if(i+j<r+1)
+                printf("  ");
+            else{
+                printf("%d ",a);
+                a++;
+            }
+        } 
+        for(k=1;k<=r-1;k++){
+            
+           if(k>=i)
+                printf("  ");
+            else{
+                printf("%d ",a-2);
+                a--;
+            }
+        }
+        printf("\n");
+    }

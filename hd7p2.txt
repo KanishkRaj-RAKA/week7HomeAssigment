@@ -1,0 +1,40 @@
+
+#include <stdio.h>
+int fact(int);
+float power(float ,int);
+int main() {
+    int i,a=3,p,n;
+    float x,num;
+    printf("Enter the value of X:");
+    scanf("%f",&x);
+    printf("Enter the no. of terms:");
+    scanf("%d",&n);
+    float sum=1;
+    for(i=1;i<n;i++){
+        p = fact(a);
+        num = power(x,a-1);
+        if(i%2 !=0)
+            sum =sum-(num/p);
+        else
+            sum=sum+(num/p);
+        a=a+2;
+    }
+    printf("value:- %f",sum);
+    return 0;
+}
+int fact(int a){
+    int i,p=1;
+    for(i=1;i<=a;i++){
+        p=p*i;
+    }
+    return p;
+}
+float power(float x,int a){
+    float p=1;
+    int i=1;
+    while(i<=a){
+        p=p*x;
+        i++;
+    }
+    return p;
+}
