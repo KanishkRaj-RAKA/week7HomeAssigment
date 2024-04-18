@@ -1,0 +1,113 @@
+//Write a program to implement the following string library functions using separate user
+//defined functions.
+//i) strcpy( ) ii) strcmp( ) iii) strncat( ) iv) strtok( )
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+void str_cpy(char *dest, const char *src) {
+    while (*src != '\0') {
+        *dest = *src;
+        src++;
+        dest++;
+    }
+    *dest = '\0';
+}
+int str_cmp(const char *str1, const char *str2) {
+    while (*str1 && *str2 && *str1 == *str2) {
+        str1++;
+        str2++;
+    }
+    return (*str1 - *str2);
+}
+size_t strlen_custom(const char *str) {
+    size_t length = 0;
+    while (*str != '\0') {
+        length++;
+        str++;
+    }
+    return length;
+}
+void strncat_custom(char *dest, const char *src, size_t n) {
+    size_t dest_len = strlen_custom(dest);
+    size_t i;
+    for (i = 0; i < n && src[i] != '\0'; i++) {
+        dest[dest_len + i] = src[i];
+    }
+    dest[dest_len + i] = '\0';
+}
+void tokenizeString(char *str) {
+    int count = 0;
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (str[i] == ' ') {
+            count++;
+        }
+    }
+    char **tokens = (char **)malloc((count + 1) * sizeof(char *));
+    if (tokens == NULL) {
+        printf("Memory allocation failed.\n");
+        return;
+    }
+    int token_index = 0;
+    char *token = strtok(str, " ");
+    while (token != NULL) {
+        tokens[token_index++] = token;
+        token = strtok(NULL, " ");
+    }
+    tokens[token_index] = NULL;
+    printf("Tokens:\n");
+    for (int i = 0; i < token_index; i++) {
+        printf("%s\n", tokens[i]);
+    }
+    free(tokens);
+}
+int main() {
+    char str1[50];
+    char str2[50];
+    int num;
+    printf("Select your Preference:\n");
+    printf(" 1) strcpy()\n 2) strcmp()\n 3) strncat()\n 4) strtok()\n");
+    printf("Enter your preference: ");
+    scanf("%d", &num);
+    switch (num) {
+        case 1:
+            printf("Enter the source string: ");
+            scanf("%s", str1);
+            char copyStr1[50];
+            str_cpy(copyStr1, str1);
+            printf("Copied string: %s\n", copyStr1);
+            break;
+        case 2:
+            printf("Enter the first string: ");
+            scanf("%s", str1);
+            printf("Enter the second string: ");
+            scanf("%s", str2);
+            int result = str_cmp(str1, str2);
+            if (result == 0)
+                printf("Strings are equal\n");
+            else if (result < 0)
+                printf("String 1 is less than String 2\n");
+            else
+                printf("String 1 is greater than String 2\n");
+            break;
+        case 3:
+            printf("Enter the first string: ");
+            scanf("%s", str1);
+            printf("Enter the second string: ");
+            scanf("%s", str2);
+            size_t length = strlen_custom(str2);
+            strncat_custom(str1, str2, length);
+            printf("Concatenated string: %s\n", str1);
+            break;
+        case 4:
+            printf("Enter the string: ");
+            getchar();
+            fgets(str1, sizeof(str1), stdin);
+            strtok(str1, "\n"); 
+            tokenizeString(str1);
+            break;
+        default:
+            printf("Invalid choice. Please try again.\n");
+            break;
+    }
+    return 0;
+}
